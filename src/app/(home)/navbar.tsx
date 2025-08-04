@@ -15,10 +15,10 @@ const poppins = Poppins({
 });
 interface NavbarItemProps {
   href: string;
-  childern: React.ReactNode;
+  children: React.ReactNode;
   isActive?: boolean;
 }
-const NavbarItem = ({ href, childern, isActive }: NavbarItemProps) => (
+const NavbarItem = ({ href, children, isActive }: NavbarItemProps) => (
   <Button
     asChild
     variant="outline"
@@ -27,7 +27,7 @@ const NavbarItem = ({ href, childern, isActive }: NavbarItemProps) => (
       isActive && "bg-black text-white hover:bg-black hover:text-white"
     )}
   >
-    <Link href={href}>{childern}</Link>
+    <Link href={href}>{children}</Link>
   </Button>
 );
 
@@ -54,7 +54,7 @@ const navbarItems = [
   },
 ];
 
-export default function navbar() {
+export default function Navbar() {
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
@@ -76,7 +76,7 @@ export default function navbar() {
           <NavbarItem
             key={item.href}
             href={item.href}
-            childern={item.children}
+            children={item.children}
             isActive={pathname === item.href}
           />
         ))}
