@@ -1,8 +1,7 @@
 "use client";
-import { Category } from "@/payload-types";
 import CategoryDropDrown from "./category-dropdrown";
 import { CustomCategory } from "../../types";
-import { useState, useRef, useEffect, act } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ListFilterIcon } from "lucide-react";
