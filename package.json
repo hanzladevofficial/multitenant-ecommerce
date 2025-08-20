@@ -5,13 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "generate:types":"bunx payload generate:types",
+    "generate:types": "bunx payload generate:types",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:seed": "bun run src/seed.ts",
+    "db:fresh": "payload migrate :fresh"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "^3.49.1",
+    "@payloadcms/email-nodemailer": "3.49.1",
     "@payloadcms/next": "^3.49.1",
     "@payloadcms/payload-cloud": "^3.49.1",
     "@payloadcms/richtext-lexical": "^3.49.1",
@@ -25,6 +28,7 @@
     "graphql": "^16.8.1",
     "lucide-react": "^0.534.0",
     "next": "15.4.5",
+    "nodemailer": "^7.0.5",
     "payload": "^3.49.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",

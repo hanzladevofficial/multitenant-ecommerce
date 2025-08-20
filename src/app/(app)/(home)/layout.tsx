@@ -6,6 +6,7 @@ import { SearchFilters } from "./search-filters";
 import configPromise from "@payload-config";
 import { getPayload } from "payload";
 import { Category } from "@/payload-types";
+import { log } from "console";
 interface Props {
   children: React.ReactNode;
 }
@@ -22,6 +23,7 @@ export default async function Layout({ children }: Props) {
         exists: false,
       },
     },
+    sort: "name",
   });
   const formattedData = data.docs.map((doc) => ({
     ...doc,
