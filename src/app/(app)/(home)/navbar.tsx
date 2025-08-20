@@ -76,9 +76,10 @@ export default function Navbar() {
           <NavbarItem
             key={item.href}
             href={item.href}
-            children={item.children}
             isActive={pathname === item.href}
-          />
+          >
+            {item.children}
+          </NavbarItem>
         ))}
       </div>
 
@@ -104,7 +105,7 @@ export default function Navbar() {
           className="size-12 border-transparent bg-white"
           onClick={() => setIsSidebarOpen(true)}
         >
-          <MenuIcon className="size-6"/>
+          <MenuIcon className="size-6" />
         </Button>
       </div>
     </nav>

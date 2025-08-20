@@ -6,7 +6,7 @@ import { SearchFilters } from "./search-filters";
 import configPromise from "@payload-config";
 import { getPayload } from "payload";
 import { Category } from "@/payload-types";
-import { log } from "console";
+
 interface Props {
   children: React.ReactNode;
 }

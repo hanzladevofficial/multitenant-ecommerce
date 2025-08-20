@@ -6,7 +6,7 @@ export const useDropDownPosition = (ref: RefObject<HTMLDivElement | null>) => {
     const rect = ref.current.getBoundingClientRect();
     const dropDownWidth = 240;
     let left = rect.left + window.scrollX;
-    let top = rect.bottom + window.scrollY;
+    const top = rect.bottom + window.scrollY;
     if (left < 0) left = window.innerWidth - dropDownWidth;
     if (left < 0) left = 16;
     return { top, left };
