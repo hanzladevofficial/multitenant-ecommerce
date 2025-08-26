@@ -1,14 +1,14 @@
 "use client";
 import CategoryDropDrown from "./category-dropdrown";
-import { CustomCategory } from "../../types";
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ListFilterIcon } from "lucide-react";
 import { CategoriesSidebar } from "./category-sidebar";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 interface Props {
-  data: CustomCategory[];
+  data: CategoriesGetManyOutput;
 }
 
 export function Categories({ data }: Props) {
@@ -71,7 +71,6 @@ export function Categories({ data }: Props) {
         <CategoriesSidebar
           open={isSidebarOpen}
           onOpenChange={setIsSidebarOpen}
-          data={data}
         />
       )}
 
