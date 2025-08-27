@@ -32,6 +32,7 @@ const poppins = Poppins({
 });
 
 export default function SignInView() {
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const trpc = useTRPC();
   const login = useMutation(
@@ -97,8 +98,6 @@ export default function SignInView() {
             <FormField
               name="password"
               render={({ field }) => {
-                const [showPassword, setShowPassword] = useState(false);
-
                 return (
                   <FormItem>
                     <FormLabel className="text-base">Password</FormLabel>
