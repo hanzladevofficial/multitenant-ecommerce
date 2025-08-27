@@ -39,7 +39,7 @@ export default function CategoryDropDrown({
         <Button
           variant="elevated"
           className={cn(
-            "h-11 px-4 bg-transparent rounded-full hover:bg-white hover:border-primary text-black",
+            "h-11 px-4 bg-transparent rounded-full hover:bg-white hover:border-primary text-black mb-1",
             isActive &&
               !isNavigationHovered &&
               "bg-white border-primary border",
@@ -54,7 +54,7 @@ export default function CategoryDropDrown({
         {category.subcategories && category.subcategories?.length > 0 && (
           <div
             className={cn(
-              "opacity-0 absolute -bottom-3 w-0 h-0 border-l-[10px] border-b-[10px] border-r-[10px] border-l-transparent border-r-transparent border-b-black left-1/2 -translate-x-1/2",
+              "opacity-0 absolute -bottom-3 w-0 h-0 py-2 border-l-[15px] border-b-[15px] border-r-[15px] border-l-transparent border-r-transparent border-b-black left-1/2 -translate-x-1/2",
               isOpen && "opacity-100"
             )}
           ></div>
