@@ -9,7 +9,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
-import { Button } from "@/components/ui/button";
+
 
 interface NavbarItemProps {
   href: string;

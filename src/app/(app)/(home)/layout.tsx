@@ -3,10 +3,6 @@ import React, { Suspense } from "react";
 import Navbar from "./navbar";
 import Footer from "./footer";
 import { SearchFilters, SearchFiltersSkeleton } from "./search-filters";
-
-import configPromise from "@payload-config";
-import { getPayload } from "payload";
-import { Category } from "@/payload-types";
 import { getQueryClient, trpc } from "@/trpc/server";
 
 interface Props {

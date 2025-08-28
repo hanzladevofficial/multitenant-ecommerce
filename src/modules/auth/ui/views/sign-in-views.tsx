@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,7 +14,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, registerSchema } from "../../schema";
+import { loginSchema } from "../../schema";
 import Link from "next/link";
 
 import { Poppins } from "next/font/google";
