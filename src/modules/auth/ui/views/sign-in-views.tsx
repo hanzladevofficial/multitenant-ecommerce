@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,7 +14,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, registerSchema } from "../../schema";
+import { loginSchema } from "../../schema";
 import Link from "next/link";
 
 import { Poppins } from "next/font/google";
@@ -23,7 +22,7 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 import { useTRPC } from "@/trpc/client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 const poppins = Poppins({
@@ -34,11 +33,13 @@ const poppins = Poppins({
 export default function SignInView() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const queryClient = useQueryClient();
   const trpc = useTRPC();
   const login = useMutation(
     trpc.auth.login.mutationOptions({
       onError: (error) => toast.error(error.message),
-      onSuccess: () => {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
         router.push("/");
       },
     })
