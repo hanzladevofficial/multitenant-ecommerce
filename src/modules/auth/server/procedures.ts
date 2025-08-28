@@ -1,10 +1,8 @@
-import z from "zod";
-
-import { headers as getHeaders, cookies as getCookies } from "next/headers";
+import { headers as getHeaders } from "next/headers";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
-import { AUTH_COOKIE } from "../constants";
 import { loginSchema, registerSchema } from "../schema";
+import { deleteAuthCookie, generateAuthCookie } from "../utils";
 
 export const authRouter = createTRPCRouter({
   session: baseProcedure.query(async ({ ctx }) => {
@@ -12,9 +10,8 @@ export const authRouter = createTRPCRouter({
     const session = await ctx.db.auth({ headers });
     return session;
   }),
-  logout: baseProcedure.mutation(async () => {
-    const cookies = await getCookies();
-    cookies.delete(AUTH_COOKIE);
+  logout: baseProcedure.mutation(async ({ ctx }) => {
+    await deleteAuthCookie(ctx.db.config.cookiePrefix);
   }),
   register: baseProcedure
     .input(registerSchema)
@@ -78,15 +75,9 @@ export const authRouter = createTRPCRouter({
           message: "Failed to login",
         });
       }
-      const cookies = await getCookies();
-      cookies.set({
-        name: AUTH_COOKIE,
+      await generateAuthCookie({
+        prefix: ctx.db.config.cookiePrefix,
         value: data.token,
-        httpOnly: true,
-        path: "/",
-        // TODO : Ensure cross-site cookie sharing
-        // sameSite: "none",
-        // domain: "your-domain.com",
       });
       return data;
     }),
@@ -105,15 +96,9 @@ export const authRouter = createTRPCRouter({
         message: "Failed to login",
       });
     }
-    const cookies = await getCookies();
-    cookies.set({
-      name: AUTH_COOKIE,
+    await generateAuthCookie({
+      prefix: ctx.db.config.cookiePrefix,
       value: data.token,
-      httpOnly: true,
-      path: "/",
-      // TODO : Ensure cross-site cookie sharing
-      // sameSite: "none",
-      // domain: "your-domain.com",
     });
     return data;
   }),
