@@ -28,7 +28,9 @@ export const productsRouter = createTRPCRouter({
         if (category) {
           if (category.subcategories?.docs?.length) {
             where["category"] = {
-              in: category.subcategories.docs.map((sub: any) => sub.id),
+              in: category.subcategories.docs.map(
+                (sub) => (sub as Category).id
+              ),
             };
           } else {
             where["category.slug"] = { equals: input.category };
