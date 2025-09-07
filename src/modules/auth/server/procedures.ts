@@ -53,12 +53,26 @@ export const authRouter = createTRPCRouter({
         }
       }
 
+      const tenant = await ctx.db.create({
+        collection: "tenants",
+        data: {
+          name: input.username,
+          subdomain: input.username,
+          stripeAccountId: "mock",
+        },
+      });
+
       await ctx.db.create({
         collection: "users",
         data: {
           email: input.email,
           password: input.password, // Will be hashed by the Payload backend
           username: input.username,
+          tenants: [
+            {
+              tenant: tenant.id,
+            },
+          ],
         },
       });
       // After Creating the user , Login instantly
