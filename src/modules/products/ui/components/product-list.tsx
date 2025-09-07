@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button";
 import { InboxIcon } from "lucide-react";
 type Props = {
   category?: string;
+  tenantSlug?: string;
 };
-export const ProductList = ({ category }: Props) => {
+export const ProductList = ({ category, tenantSlug }: Props) => {
   const [filters] = useProductFilters();
   const trpc = useTRPC();
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
@@ -18,6 +19,7 @@ export const ProductList = ({ category }: Props) => {
         {
           ...filters,
           category,
+          tenantSlug,
           limit: DEFAULT_LIMIT,
         },
         {
@@ -48,8 +50,8 @@ export const ProductList = ({ category }: Props) => {
               id={product.id}
               name={product.name}
               imageUrl={product.image?.url}
-              authorUsername="hanzla"
-              authorImageUrl={undefined}
+              tenantSlug={product.tenant?.subdomain}
+              tenantImageUrl={product.tenant?.image?.url}
               reviewRating={3}
               reviewCount={5}
               price={product.price}
