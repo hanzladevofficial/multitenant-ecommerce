@@ -22,7 +22,9 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: "email",
   },
-  auth: true,
+  auth: {
+    verify: true,
+  },
   fields: [
     {
       name: "username",
@@ -48,4 +50,28 @@ export const Users: CollectionConfig = {
       },
     },
   ],
+  hooks: {
+    afterLogin: [
+      async ({ user, req, context }) => {
+        if (!user.tenants || user.tenants.length === 0) {
+          // Create tenant
+          const tenant = await req.payload.create({
+            collection: "tenants",
+            data: {
+              name: user.username,
+              subdomain: user.username,
+              stripeAccountId: "mock",
+            },
+          });
+
+          // Link tenant to user
+          await req.payload.update({
+            collection: "users",
+            id: user.id,
+            data: { tenants: [{ tenant: tenant.id }] },
+          });
+        }
+      },
+    ],
+  },
 };

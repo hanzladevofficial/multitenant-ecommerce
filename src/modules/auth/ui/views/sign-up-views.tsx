@@ -24,7 +24,6 @@ import { useState } from "react";
 
 import { useTRPC } from "@/trpc/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -34,14 +33,15 @@ const poppins = Poppins({
 export default function SignUpView() {
   const [showPassword, setShowPassword] = useState(false);
   const queryClient = useQueryClient();
-  const router = useRouter();
   const trpc = useTRPC();
+  const [userEmail, setUserEmail] = useState("");
   const register = useMutation(
     trpc.auth.register.mutationOptions({
       onError: (error) => toast.error(error.message),
       onSuccess: async () => {
         await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
-        router.push("/");
+        toast.success("Check your email to verify your account.");
+        form.reset();
       },
     })
   );
@@ -55,6 +55,7 @@ export default function SignUpView() {
     },
   });
   const onSubmit = (values: z.infer<typeof registerSchema>) => {
+    setUserEmail(values.email);
     register.mutate(values);
   };
   const username = form.watch("username");
@@ -90,6 +91,12 @@ export default function SignUpView() {
             <h1 className="text-4xl font-medium">
               Join over 1000 creators earning money on Funroad.
             </h1>
+            {register.isSuccess && (
+              <h1 className="text-2xl font-medium text-green-900">
+                Account created! Please check your email at{" "}
+                <strong>{userEmail}</strong> to verify your account.
+              </h1>
+            )}
             <FormField
               name="username"
               render={({ field }) => (
