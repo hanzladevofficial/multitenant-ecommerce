@@ -53,45 +53,13 @@ export const authRouter = createTRPCRouter({
         }
       }
 
-      const tenant = await ctx.db.create({
-        collection: "tenants",
-        data: {
-          name: input.username,
-          subdomain: input.username,
-          stripeAccountId: "mock",
-        },
-      });
-
-      await ctx.db.create({
+      const data = await ctx.db.create({
         collection: "users",
         data: {
           email: input.email,
           password: input.password, // Will be hashed by the Payload backend
           username: input.username,
-          tenants: [
-            {
-              tenant: tenant.id,
-            },
-          ],
         },
-      });
-      // After Creating the user , Login instantly
-      const data = await ctx.db.login({
-        collection: "users",
-        data: {
-          email: input.email,
-          password: input.password,
-        },
-      });
-      if (!data.token) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Failed to login",
-        });
-      }
-      await generateAuthCookie({
-        prefix: ctx.db.config.cookiePrefix,
-        value: data.token,
       });
       return data;
     }),
