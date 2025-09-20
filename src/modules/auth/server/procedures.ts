@@ -65,23 +65,43 @@ export const authRouter = createTRPCRouter({
     }),
 
   login: baseProcedure.input(loginSchema).mutation(async ({ ctx, input }) => {
-    const data = await ctx.db.login({
-      collection: "users",
-      data: {
-        email: input.email,
-        password: input.password,
-      },
-    });
-    if (!data.token) {
-      throw new TRPCError({
-        code: "UNAUTHORIZED",
-        message: "Failed to login",
+    try {
+      const data = await ctx.db.login({
+        collection: "users",
+        data: {
+          email: input.email,
+          password: input.password,
+        },
       });
+
+      if (!data.token) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "Invalid credentials.",
+        });
+      }
+
+      await generateAuthCookie({
+        prefix: ctx.db.config.cookiePrefix,
+        value: data.token,
+      });
+
+      return data;
+    } catch (err: any) {
+      if (err.name === "AuthenticationError") {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "The email or password provided is incorrect.",
+        });
+      }
+      if (err.name === "UnverifiedEmail") {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "The email or password provided is incorrect.",
+        });
+      }
+      // For all other errors, let tRPC handle as INTERNAL_SERVER_ERROR
+      throw err;
     }
-    await generateAuthCookie({
-      prefix: ctx.db.config.cookiePrefix,
-      value: data.token,
-    });
-    return data;
   }),
 });
