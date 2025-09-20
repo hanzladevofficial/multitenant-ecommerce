@@ -87,21 +87,20 @@ export const authRouter = createTRPCRouter({
       });
 
       return data;
-    } catch (err: any) {
-      if (err.name === "AuthenticationError") {
+    } catch (err: unknown) {
+      if (err instanceof Error && err.name === "AuthenticationError") {
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "The email or password provided is incorrect.",
         });
       }
-      if (err.name === "UnverifiedEmail") {
+      if (err instanceof Error && err.name === "UnverifiedEmail") {
         throw new TRPCError({
           code: "UNAUTHORIZED",
-          message: "The email or password provided is incorrect.",
+          message: "Please verify your email before logging in.",
         });
       }
-      // For all other errors, let tRPC handle as INTERNAL_SERVER_ERROR
-      throw err;
+      throw err; // let tRPC handle other errors
     }
   }),
 });
