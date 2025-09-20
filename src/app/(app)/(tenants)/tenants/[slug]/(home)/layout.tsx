@@ -21,7 +21,7 @@ export default async function layout({ children, params }: Props) {
           <Navbar slug={slug} />
         </Suspense>
       </HydrationBoundary>
-      <main className="min-h-screen">{children}</main>
+      <main className="min-h-screen max-w-screen-lg mx-auto">{children}</main>
       <Footer />
     </div>
   );

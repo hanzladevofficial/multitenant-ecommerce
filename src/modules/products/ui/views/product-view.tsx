@@ -8,7 +8,24 @@ import { LinkIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
-import { start } from "repl";
+import dynamic from "next/dynamic";
+import { cn } from "@/lib/utils";
+import CopyLinkButton from "../components/copyLink-button";
+const CartButton = dynamic(
+  () => import("../components/cart-button").then((mod) => mod.CartButton),
+  {
+    ssr: false,
+    loading: () => (
+      // Skeleton placeholder while CartButton loads
+      <Button
+        disabled
+        className={cn("flex-1 border bg-pink-400 animate-pulse")}
+      >
+        Cart
+      </Button>
+    ),
+  }
+);
 
 type Props = {
   productId: string;
@@ -96,20 +113,8 @@ export default function ProducView({ productId, tenantSlug }: Props) {
             <div className="border-t lg:border-t-0 lg:border-l h-full">
               <div className="flex flex-col gap-4 p-6 border-b">
                 <div className="flex flex-row items-center gap-2">
-                  <Button
-                    variant={"elevated"}
-                    className="flex-1 bg-pink-400 border"
-                  >
-                    Add to cart
-                  </Button>
-                  <Button
-                    className="size-12 border"
-                    variant={"elevated"}
-                    onClick={() => {}}
-                    disabled={false}
-                  >
-                    <LinkIcon />
-                  </Button>
+                  <CartButton tenantSlug={tenantSlug} productId={productId} />
+                  <CopyLinkButton />
                 </div>
 
                 <p className="text-center font-medium">
