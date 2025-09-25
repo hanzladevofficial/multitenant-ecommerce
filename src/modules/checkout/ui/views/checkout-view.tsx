@@ -127,7 +127,7 @@ export default function CheckoutView({ tenantSlug }: Props) {
         </div>
         <div className="lg:col-span-3">
           <CheckoutSidebar
-            totalPrice={data?.totalPrice}
+            totalPrice={data?.totalPrice || 0}
             onCheckout={() => {}}
             isCanceled={true}
             isPending={false}
