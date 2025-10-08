@@ -68,7 +68,7 @@ export default function SignInView() {
                 <span
                   className={cn("text-2xl font-semibold", poppins.className)}
                 >
-                  fanroad
+                  funroad
                 </span>
               </Link>
               <Button
