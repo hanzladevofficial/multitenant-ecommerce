@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { ExpandedLineItem } from "@/modules/checkout/types";
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: Request) {
   let event: Stripe.Event;
   try {
     event = stripe.webhooks.constructEvent(
