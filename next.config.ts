@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
         protocol: "http",
         hostname: "localhost", // allow all images from localhost
       },
+      {
+        protocol: "https",
+        hostname: "**.vercel-storage.com",
+      },
     ],
   },
 };
