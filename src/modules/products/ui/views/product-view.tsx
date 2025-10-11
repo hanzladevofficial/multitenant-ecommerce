@@ -45,7 +45,7 @@ export default function ProducView({ productId, tenantSlug }: Props) {
             src={data?.image?.url || "/placeholder.png"}
             alt={data.name}
             fill
-            className="object-cover"
+            className="object-center w-full"
           />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-6">
