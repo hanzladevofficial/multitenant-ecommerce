@@ -2,6 +2,36 @@ import type { CollectionConfig } from "payload";
 
 export const Orders: CollectionConfig = {
   slug: "Orders",
+  access: {
+    read: ({ req }) => {
+      const user = req.user;
+      if (!user) return false;
+      return {
+        user: {
+          equals: user.id,
+        },
+      };
+    },
+    create: ({ req }) => !!req.user,
+    update: ({ req }) => {
+      const user = req.user;
+      if (!user) return false;
+      return {
+        user: {
+          equals: user.id,
+        },
+      };
+    },
+    delete: ({ req }) => {
+      const user = req.user;
+      if (!user) return false;
+      return {
+        user: {
+          equals: user.id,
+        },
+      };
+    },
+  },
   admin: {
     useAsTitle: "name",
   },
