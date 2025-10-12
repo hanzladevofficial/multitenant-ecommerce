@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "**.vercel-storage.com",
       },
+      {
+        protocol: "https",
+        hostname: "multitenant-ecommerce-tau.vercel.app",
+      },
     ],
   },
 };

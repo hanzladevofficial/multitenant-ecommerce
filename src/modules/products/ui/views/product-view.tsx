@@ -37,6 +37,8 @@ export default function ProducView({ productId, tenantSlug }: Props) {
   const { data } = useSuspenseQuery(
     trpc.products.getOne.queryOptions({ id: productId })
   );
+  console.log(data?.image?.url);
+
   return (
     <div className="px-4 lg:px-12 py-10">
       <div className="border rounded-sm bg-white overflow-hidden">
