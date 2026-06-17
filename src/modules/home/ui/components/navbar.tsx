@@ -50,10 +50,6 @@ const navbarItems = [
     href: "/pricing",
     children: "Pricing",
   },
-  {
-    href: "/contact",
-    children: "Contact",
-  },
 ];
 
 export default function Navbar() {
